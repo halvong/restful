@@ -21,7 +21,7 @@ services:
     #    --reload
     #    wisdompets.wsgi:application
     volumes:
-      - .:/usr/src/app
+      - .:/app
     ports:
       - "8000:8000"
     depends_on:
