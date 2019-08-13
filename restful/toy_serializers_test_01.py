@@ -1,8 +1,3 @@
-"""
-Book: Django RESTful Web Services
-Author: Gaston C. Hillar - Twitter.com/gastonhillar
-Publisher: Packt Publishing Ltd. - http://www.packtpub.com
-"""
 from datetime import datetime
 from django.utils import timezone
 from django.utils.six import BytesIO
@@ -11,9 +6,10 @@ from rest_framework.parsers import JSONParser
 from toys.models import Toy
 from toys.serializers import ToySerializer
 
-toy_release_date = timezone.make_aware(datetime.now(), #timezone.get_current_timezone())
+toy_release_date = timezone.make_aware(datetime.now(), timezone.get_current_timezone())
 
-toy1 = Toy(name='G.I. Joe action figure', description='American SOF soldiers', release_date=toy_release_date, toy_category='Action figures', was_included_in_home=False)
+toy1 = Toy(name='Lotus RC', description='Remote Control Offroad Car', release_date=toy_release_date,
+           toy_category='Adult Toys', was_included_in_home=True)
 toy1.save()
 
 toy2 = Toy(name='Transformer Robotics', description='Transaformer Robotics protects the Earth.', release_date=toy_release_date, toy_category='Dolls', was_included_in_home=True)
@@ -31,17 +27,32 @@ print(toy2.was_included_in_home)
 serializer_for_toy1 = ToySerializer(toy1)
 print(serializer_for_toy1.data)
 
+# transforms database query into dictionary object
+# {
+# 'name': 'Clash Royale play set',
+# 'description': '6 figures from Clash Royale',
+# 'release_date': '2017-10-09T12:10:00.776594Z',
+# 'toy_category': 'Playset',
+# 'was_included_in_home': False
+# }
+
 serializer_for_toy2 = ToySerializer(toy2)
 print(serializer_for_toy2.data)
 
+# converts dictionary into bytes JSON object
+#b'{"pk":4,"name":"Lotus RC","description":"Remote Control Offroad Car","release_date":"2019-08-13T16:28:21.404419","toy_category":"Adult Toys","was_included_in_home":true}'
 json_renderer = JSONRenderer()
 toy1_rendered_into_json = json_renderer.render(serializer_for_toy1.data)
 toy2_rendered_into_json = json_renderer.render(serializer_for_toy2.data)
 print(toy1_rendered_into_json)
 print(toy2_rendered_into_json)
 
-json_string_for_new_toy = '{"name":"Clash Royale play set","description":"6 figures from Clash Royale", "release_date":"2017-10-09T12:10:00.776594Z","toy_category":"Playset","was_included_in_home":false}'
+json_string_for_new_toy = '{"name":"World of War Crafts II","description":"Computer RTF games", "release_date":"2019-08-13T09:40:00.776594Z","toy_category":"Video Game","was_included_in_home":True}'
 json_bytes_for_new_toy = bytes(json_string_for_new_toy, encoding="UTF-8")
+# bytes JSON object
+# b'{"name":"World of War Crafts II","description":"Computer RTF games", "release_date":"2019-08-13T09:40:00.776594Z","toy_category":"Video Game","was_included_in_home":True}'
+
+#bytes object - <_io.BytesIO object at 0x7f30f1967780>
 stream_for_new_toy = BytesIO(json_bytes_for_new_toy)
 parser = JSONParser()
 parsed_new_toy = parser.parse(stream_for_new_toy)
