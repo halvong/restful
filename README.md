@@ -1,7 +1,7 @@
 Django Restful Web Services, Packtpub
-10/02, Wed
+10/03, Thurs
 
-PG58
+PG97
 
 
 #

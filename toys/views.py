@@ -17,7 +17,6 @@ class JSONResponse(HttpResponse):
 def toy_list(request):
 
     if request.method == 'GET':
-
         toys = Toy.objects.all()
         toys_serializer = ToySerializer(toys, many=True)
         return JSONResponse(toys_serializer.data)
