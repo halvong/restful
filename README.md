@@ -1,7 +1,8 @@
 Django Restful Web Services, Packtpub
-10/03, Thurs
+10/04, Friday
 
-PG97
+chp6
+PG129
 
 
 #
@@ -40,6 +41,8 @@ json_bytes_for_new_toy = bytes(json_string_for_new_toy, encoding="UTF-8")
 stream_for_new_toy = BytesIO(json_bytes_for_new_toy)
 parser = JSONParser()
 parsed_new_toy = parser.parse(stream_for_new_toy)
+7. docker-compose logs -f
+8.
 
 
    
