@@ -2,7 +2,7 @@ Django Restful Web Services, Packtpub
 10/04, Friday
 
 chp6
-PG129
+PG157, Working with class-based views
 
 
 #
@@ -42,7 +42,12 @@ stream_for_new_toy = BytesIO(json_bytes_for_new_toy)
 parser = JSONParser()
 parsed_new_toy = parser.parse(stream_for_new_toy)
 7. docker-compose logs -f
-8.
+8. docker-compose exec web python manage.py startapp drones     --pg135, skips
+9. docker-compose exec web python manage.py makemigrations drones     --pg135, skips
+10. docker-compose exec web python manage.py migrate     --pg147
+11.
+
+
 
 
    
