@@ -2,12 +2,11 @@ Django Restful Web Services, Packtpub
 10/04, Friday
 
 chp6
-PG157, Working with class-based views
-
+PG159, Working with class-based views
 
 #
 curl -X GET localhost:8000/toys/
-
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"Quadcopter"}' localhost:8000/drone-categories/
 
 #chp6, working with class-based views
 #postgresql
