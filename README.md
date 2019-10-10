@@ -1,8 +1,8 @@
 Django Restful Web Services, Packtpub
-10/04, Friday
+10/10, Thursday
 
 chp7
-PG180, Filtering searching ordering pagination 
+PG196, Filtering searching ordering pagination 
 
 #
 curl -X GET localhost:8000/toys/
@@ -37,6 +37,23 @@ curl -iX POST -H "Content-Type: application/json" -d '{"distance_in_feet":"790",
 http :8000/pilots/1
 curl -iX GET localhost:8000/pilots/1
 
+#drone
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"Quadcopter"}' localhost:8000/drone-categories/
+
+#pilots
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"Penelope Pitstop", "gender":"F", "races_count": 0}' localhost:8000/pilots/
+
+#
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"Need for Speed", "drone_category":"Quadcopter", "manufacturing_date": "2017-01-20T02:02:00.716312Z", "has_it_competed": "false"}' localhost:8000/drones/
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"Eclipse", "drone_category":"Octocopter", "manufacturing_date": "2017-02-20T02:02:00.716312Z", "has_it_competed": "false"}' localhost:8000/drones/
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"Gossamer Albatross", "drone_category":"Quadcopter", "manufacturing_date": "2017-03-20T02:02:00.716312Z", "has_it_competed": "false"}' localhost:8000/drones/
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"Dassault Falcon 7X", "drone_category":"Octocopter", "manufacturing_date": "2017-04-20T02:02:00.716312Z", "has_it_competed": "false"}' localhost:8000/drones/
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"Gulfstream I", "drone_category":"Quadcopter","manufacturing_date": "2017-05-20T02:02:00.716312Z", "has_it_competed": "false"}' localhost:8000/drones/
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"RV-3", "drone_category":"Octocopter", "manufacturing_date": "2017-06-20T02:02:00.716312Z", "has_it_competed": "false"}' localhost:8000/drones/
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"Dusty", "drone_category":"Quadcopter", "manufacturing_date": "2017-07-20T02:02:00.716312Z", "has_it_competed": "false"}' localhost:8000/drones/
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"Ripslinger", "drone_category":"Octocopter", "manufacturing_date": "2017-08-20T02:02:00.716312Z", "has_it_competed": "false"}' localhost:8000/drones/
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"Skipper", "drone_category":"Quadcopter", "manufacturing_date": "2017-09-20T02:02:00.716312Z", "has_it_competed": "false"}' localhost:8000/drones/
+curl -iX GET localhost:8000/drones/
 
 
 
@@ -75,9 +92,10 @@ parsed_new_toy = parser.parse(stream_for_new_toy)
 7. docker-compose logs -f
 8. docker-compose exec web python manage.py startapp drones     --pg135, skips
 9. docker-compose exec web python manage.py makemigrations drones     --pg135, skips
-10. docker-compose exec web python manage.py migrate     --pg147
-11.
-
+    docker-compose exec web python manage.py migrate 
+10. docker-compose exec web python manage.py makemigrations drones  --pg181 
+    docker-compose exec web python manage.py migrate 
+11. docker-compose logs -f web 
 
 
 
