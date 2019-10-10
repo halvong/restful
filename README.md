@@ -2,7 +2,7 @@ Django Restful Web Services, Packtpub
 10/10, Thursday
 
 chp7
-PG196, Filtering searching ordering pagination 
+PG203, Filtering searching ordering pagination 
 
 #
 curl -X GET localhost:8000/toys/
@@ -54,7 +54,7 @@ curl -iX POST -H "Content-Type: application/json" -d '{"name":"Dusty", "drone_ca
 curl -iX POST -H "Content-Type: application/json" -d '{"name":"Ripslinger", "drone_category":"Octocopter", "manufacturing_date": "2017-08-20T02:02:00.716312Z", "has_it_competed": "false"}' localhost:8000/drones/
 curl -iX POST -H "Content-Type: application/json" -d '{"name":"Skipper", "drone_category":"Quadcopter", "manufacturing_date": "2017-09-20T02:02:00.716312Z", "has_it_competed": "false"}' localhost:8000/drones/
 curl -iX GET localhost:8000/drones/
-
+curl -iX GET "localhost:8000/drones/?limit=500"
 
 
 #chp6, working with class-based views
