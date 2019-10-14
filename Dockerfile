@@ -13,7 +13,7 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Run the image as a non-root user
-RUN adduser --disabled-login tom
+RUN adduser --disabled-login --gecos '' tom
 USER tom
 
 # Run the app.  CMD is required to run on Heroku
