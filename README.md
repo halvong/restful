@@ -2,7 +2,7 @@ Django Restful Web Services, Packtpub
 10/14, Monday
 
 chp8
-PG220, Securing the API with Auth and Permissions 
+PG224, Adding authenication classes 
 
 #
 curl -X GET localhost:8000/toys/
