@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.throttling import ScopedRateThrottle
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -12,8 +15,6 @@ from drones.serializers import PilotSerializer
 from drones.serializers import PilotCompetitionSerializer
 from rest_framework import permissions
 from drones import custompermission
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter, rest_framework as filters
 
 class DroneCategoryList(generics.ListCreateAPIView):
@@ -32,6 +33,8 @@ class DroneCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class DroneList(generics.ListCreateAPIView):
     name = 'drone-list'
+    throttle_scope = 'drones'
+    throttle_classes = (ScopedRateThrottle,)
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
 
@@ -45,6 +48,8 @@ class DroneList(generics.ListCreateAPIView):
 
 class DroneDetail(generics.RetrieveUpdateDestroyAPIView):
     name = 'drone-detail'
+    throttle_scope = 'drones'
+    throttle_classes = (ScopedRateThrottle,)
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
     permission_classes = (
@@ -55,6 +60,9 @@ class DroneDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class PilotList(generics.ListCreateAPIView):
     name = 'pilot-list'
+    throttle_scope = 'pilots'
+    throttle_classes = (ScopedRateThrottle,)
+
     queryset = Pilot.objects.all()
     serializer_class = PilotSerializer
 
@@ -67,6 +75,8 @@ class PilotList(generics.ListCreateAPIView):
 
 class PilotDetail(generics.RetrieveUpdateDestroyAPIView):
     name = 'pilot-detail'
+    throttle_scope = 'pilots'
+    throttle_classes = (ScopedRateThrottle,)
     queryset = Pilot.objects.all()
     serializer_class = PilotSerializer
 

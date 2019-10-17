@@ -1,8 +1,8 @@
 Django Restful Web Services, Packtpub
-10/16, Wed
+10/17, Thurs
 
 chp9
-PG255, Throttling
+PG259, Versioning
 
 #create user
 tom:tom
@@ -80,6 +80,7 @@ pg 238
 curl --user "hal":"hal" -iX POST -H "Content-Type: application/json" -d '{"name":"Python Drone", "drone_category":"Quadcopter", "manufacturing_date": "2017-07-16T02:03:00.716312Z", "has_it_competed": "false"}' localhost:8000/drones/
 curl --user "tom":"tom" -iX PATCH -H "Content-Type: application/json" -d '{"has_it_competed": "true"}' localhost:8000/drones/12
 curl --user "hal":"hal" -iX GET localhost:8000/drones/12
+for i in {1..4}; do http -a "hal":"hal" :8000/competitions/; done;
 
 #chp6, working with class-based views
 #postgresql
