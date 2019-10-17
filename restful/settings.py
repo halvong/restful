@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'toys.apps.ToysConfig',
     'drones.apps.DronesConfig',
     'django_filters',
+    # Token authentication
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [

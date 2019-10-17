@@ -1,13 +1,26 @@
 Django Restful Web Services, Packtpub
-10/14, Monday
+10/16, Wed
 
-chp8
-PG224, Adding authenication classes 
+chp9
+PG255, Throttling
+
+#create user
+tom:tom
+b3664d4c107f627dfad4568a62271c206037869d
+
+hal:hal
+03a6e11bcb09426abbeb02a3458a37e4fa1e674d
+
+#postgresql
+docker-compose exec database psql --username=tom --dbname=drones --command="SELECT id FROM auth_user WHERE username = 'djangosuper';"
+
+#
+curl -iX GET http://localhost:8000/pilots/ -H "Authorization: Token 03a6e11bcb09426abbeb02a3458a37e4fa1e674d"
+
 
 #
 curl -X GET localhost:8000/toys/
 curl -iX POST -H "Content-Type: application/json" -d '{"name":"Quadcopter"}' localhost:8000/drone-categories/
-
 
 http POST :8000/drones/ name="WonderDrone" drone_category="Quadcopter" manufacturing_date="2017-07-20T02:02:00.716312Z" has_it_competed=false
 http POST :8000/drones/ name="Atom" drone_category="Quadcopter" manufacturing_date="2017-08-18T02:02:00.716312Z" has_it_competed=false
@@ -63,6 +76,10 @@ curl -iX POST -H "Content-Type: application/json" -d '{"name":"Skipper", "drone_
 curl -iX GET localhost:8000/drones/
 curl -iX GET "localhost:8000/drones/?limit=500"
 
+pg 238
+curl --user "hal":"hal" -iX POST -H "Content-Type: application/json" -d '{"name":"Python Drone", "drone_category":"Quadcopter", "manufacturing_date": "2017-07-16T02:03:00.716312Z", "has_it_competed": "false"}' localhost:8000/drones/
+curl --user "tom":"tom" -iX PATCH -H "Content-Type: application/json" -d '{"has_it_competed": "true"}' localhost:8000/drones/12
+curl --user "hal":"hal" -iX GET localhost:8000/drones/12
 
 #chp6, working with class-based views
 #postgresql
@@ -103,8 +120,10 @@ parsed_new_toy = parser.parse(stream_for_new_toy)
 10. docker-compose exec web python manage.py makemigrations drones  --pg181 
     docker-compose exec web python manage.py migrate 
 11. docker-compose logs -f web 
+12. docker-compose exec web python manage.py createsuperuser  --pg231 
+13. docker-compose exec web python manage.py shell            --pg236 
 
-
+    user = User.objects.create_user('hal', 'halvong@yahoo.com', 'hal')
 
    
 # old steps
