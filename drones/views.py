@@ -10,50 +10,68 @@ from drones.serializers import DroneCategorySerializer
 from drones.serializers import DroneSerializer
 from drones.serializers import PilotSerializer
 from drones.serializers import PilotCompetitionSerializer
-#from rest_framework import filters
+from rest_framework import permissions
+from drones import custompermission
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter, rest_framework as filters
 
 class DroneCategoryList(generics.ListCreateAPIView):
+    name = 'dronecategory-list'
     queryset = DroneCategory.objects.all()
     serializer_class = DroneCategorySerializer
-    name = 'dronecategory-list'
 
     filter_fields = ('name',)
     search_fields = ('^name',)
     ordering_fields = ('name',)
 
 class DroneCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    name = 'dronecategory-detail'
     queryset = DroneCategory.objects.all()
     serializer_class = DroneCategorySerializer
-    name = 'dronecategory-detail'
 
 class DroneList(generics.ListCreateAPIView):
+    name = 'drone-list'
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
-    name = 'drone-list'
 
     filter_fields = ('name', 'drone_category', 'manufacturing_date', 'has_it_competed', )
     search_fields = ('^name',)
     ordering_fields = ('name', 'manufacturing_date',)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, custompermission.IsCurrentUserOwnerOrReadOnly,)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 class DroneDetail(generics.RetrieveUpdateDestroyAPIView):
+    name = 'drone-detail'
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
-    name = 'drone-detail'
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        custompermission.IsCurrentUserOwnerOrReadOnly,
+    )
+
 
 class PilotList(generics.ListCreateAPIView):
+    name = 'pilot-list'
     queryset = Pilot.objects.all()
     serializer_class = PilotSerializer
-    name = 'pilot-list'
 
     filter_fields = ('name', 'gender', 'races_count',)
     search_fields = ('^name',)
     ordering_fields = ('name', 'races_count')
 
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
 class PilotDetail(generics.RetrieveUpdateDestroyAPIView):
+    name = 'pilot-detail'
     queryset = Pilot.objects.all()
     serializer_class = PilotSerializer
-    name = 'pilot-detail'
+
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
 class CompetitionFilter(filters.FilterSet):
     from_achievement_date = DateTimeFilter(field_name='distance_achievement_date', lookup_expr='gte')
@@ -72,19 +90,17 @@ class CompetitionFilter(filters.FilterSet):
                 'pilot_name',
                 )
 
-
-
 class CompetitionList(generics.ListCreateAPIView):
+    name = 'competition-list'
     queryset = Competition.objects.all()
     serializer_class = PilotCompetitionSerializer
-    name = 'competition-list'
     filter_class = CompetitionFilter
     ordering_fields = ('distance_in_feet', 'distance_achievement_date', )
 
 class CompetitionDetail(generics.RetrieveUpdateDestroyAPIView):
+    name = 'competition-detail'
     queryset = Competition.objects.all()
     serializer_class = PilotCompetitionSerializer
-    name = 'competition-detail'
 
 #---
 class ApiRoot(generics.GenericAPIView):
